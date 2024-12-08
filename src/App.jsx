@@ -1,62 +1,42 @@
-const Header = (props) => {
-  return (
-    <>
-    <h1>{props.course.name}</h1>
-    </>
-  )
-}
+import { useState } from 'react'
 
-const Content = (props) => {
+{/*
+h1 - 
   
-  return (
-    <>
-    <p>
-      {props.course.parts[0].name}: {props.course.parts[0].exercises}
-    </p>
-    <p>
-      {props.course.parts[1].name}: {props.course.parts[1].exercises}
-    </p>
-    <p>
-      {props.course.parts[2].name}: {props.course.parts[2].exercises}
-    </p>
-    </>
-  )
+  */}
+
+const Header = props => <h1>{props.value}</h1>
+
+const Button = (props) => (<button onClick={props.handlecklick}>{props.value}</button>)
+
+const Total = (props) => <p>{props.text} {props.total}</p>
+
+const defaultAction = () => {
+  const handler = () => console.log("Button Clicked");
+  return handler;
 }
 
-const Total = (props) => {
-  return (
-    <>
-    <p>
-      Number of exercises: {props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises}
-    </p>
-    </>
-  )
-}
+
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
   return (
     <div>
-      <Header course={course} />
-      <Content course={course} />
-      <Total course={course} />
-      
+      <Header value='give feedback' />
+      <br />
+      <Button handlecklick={() => setGood(good + 1)} value="good"/>
+      <Button handlecklick={() => setNeutral(neutral + 1)} value="neutral"/>
+      <Button handlecklick={() => setBad(bad + 1)} value="bad"/>
+      <br />
+      <Header value='statics' />
+      <br />
+      <Total text='good' total={good} />
+      <Total text='neutral' total={neutral} />
+      <Total text='bad' total={bad} />
     </div>
   )
 }
