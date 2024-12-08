@@ -1,9 +1,5 @@
 import { useState } from 'react'
 
-{/*
-h1 - 
-  
-  */}
 
 const Header = props => <h1>{props.value}</h1>
 
@@ -11,11 +7,23 @@ const Button = (props) => (<button onClick={props.handlecklick}>{props.value}</b
 
 const Total = (props) => <p>{props.text} {props.total}</p>
 
-const defaultAction = () => {
+const DefaultAction = () => {
   const handler = () => console.log("Button Clicked");
   return handler;
 }
 
+const Statistics = (props) => {
+  const total = (props.good + props.neutral + props.bad)
+  const average = (total === 0)? 0: (props.good-props.bad)/total
+  const positive = (total === 0)? 0: (props.good)/total
+  return(
+    <>
+    <p>all {total}</p>
+    <p>average {average}</p>
+    <p>positive {positive}</p>
+    </> 
+  )
+}
 
 
 const App = () => {
@@ -39,9 +47,7 @@ const App = () => {
       <Total text='good' total={good} />
       <Total text='neutral' total={neutral} />
       <Total text='bad' total={bad} />
-      <Total text='all' total={(good + neutral + bad)} />
-      <Total text='average' total={(good - bad) /(good + neutral + bad)} />
-      <Total text='postive' total={(good) /(good + neutral + bad)} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
