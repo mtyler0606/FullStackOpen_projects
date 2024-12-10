@@ -5,7 +5,7 @@ const Header = props => <h1>{props.value}</h1>
 
 const Button = (props) => (<button onClick={props.handlecklick}>{props.value}</button>)
 
-const StatisticLine = props => <p>{props.text} {props.value}</p> 
+const StatisticLine = props => <tr><td>{props.text}</td><td>{props.value}</td></tr>
 
 const Statistics = (props) => {
   const total = (props.good + props.neutral + props.bad)
@@ -13,15 +13,19 @@ const Statistics = (props) => {
     return <p>No feedback given</p>
   }
   const average = (total === 0)? 0: (props.good-props.bad)/total
-  const positive = (total === 0)? 0: (props.good)/total
+  const positive = (total === 0)? 0: (100 * props.good)/total + " %"
   return(
     <>
-    <StatisticLine text="good" value={props.good} />
-    <StatisticLine text="neutral" value={props.neutral} />
-    <StatisticLine text="bad" value={props.bad} />
-    <StatisticLine text="total" value={total} />
-    <StatisticLine text="average" value={average} />
-    <StatisticLine text="positive" value={positive} />
+    <table>
+      <tbody>
+        <StatisticLine text="good" value={props.good} />
+        <StatisticLine text="neutral" value={props.neutral} />
+        <StatisticLine text="bad" value={props.bad} />
+        <StatisticLine text="total" value={total} />
+        <StatisticLine text="average" value={average} />
+        <StatisticLine text="positive" value={positive} />
+      </tbody>
+    </table>
     </> 
   )
 }
@@ -32,8 +36,6 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-
-  const calculateAverage = () => (good - bad) /(good + neutral + bad)  
   
   return (
     <div>
