@@ -5,19 +5,19 @@ const Header = props => <h1>{props.value}</h1>
 
 const Button = (props) => (<button onClick={props.handlecklick}>{props.value}</button>)
 
-const Total = (props) => <p>{props.text} {props.total}</p>
-
-const DefaultAction = () => {
-  const handler = () => console.log("Button Clicked");
-  return handler;
-}
 
 const Statistics = (props) => {
   const total = (props.good + props.neutral + props.bad)
+  if(total === 0){
+    return <p>No feedback given</p>
+  }
   const average = (total === 0)? 0: (props.good-props.bad)/total
   const positive = (total === 0)? 0: (props.good)/total
   return(
     <>
+    <p>good {props.good}</p>
+    <p>neutral {props.neutral}</p>
+    <p>bad {props.bad}</p>
     <p>all {total}</p>
     <p>average {average}</p>
     <p>positive {positive}</p>
@@ -42,11 +42,7 @@ const App = () => {
       <Button handlecklick={() => setNeutral(neutral + 1)} value="neutral"/>
       <Button handlecklick={() => setBad(bad + 1)} value="bad"/>
       <br />
-      <Header value='statics' />
-      <br />
-      <Total text='good' total={good} />
-      <Total text='neutral' total={neutral} />
-      <Total text='bad' total={bad} />
+      <Header value='statistics' />
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
